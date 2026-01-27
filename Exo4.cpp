@@ -10,14 +10,17 @@ typedef struct /* On définit un type struct */
 }
 noteseninfo;
 
-void affiche(noteseninfo*fiche)
+void affiche(noteseninfo*fiche,int index)
 {
-	int nombre = fiche->nbnotes;
-	printf_s("Note de %s %s : \n",fiche->nom,fiche->prenom);
-	printf_s("Il y a actuellement %d", nombre);
-	for (int i = 0; i < nombre; i++)
+	for (int j = 0; j < index; j++)
 	{
-		printf_s("%f ", fiche->note[i]);
+		int nombre = fiche[j].nbnotes;
+		printf_s("Note de %s %s : \n",fiche[j].nom, fiche[j].prenom);
+		printf_s("Il y a actuellement %d",fiche[j].nbnotes);
+		for (int i = 0; i < nombre; i++)
+		{
+			printf_s("%f ", fiche[j].note[i]);
+		}
 	}
 }
 
@@ -32,10 +35,10 @@ int Saisir(noteseninfo* fiche, int* index)
 	}
 	else
 	{
-		printf_s("Pour quelle élève ? \n");
-		printf_s("Pour quelle nom \n");
+		printf_s("Pour quelle Eleve ? \n");
+		printf_s("Quelle nom ?\n");
 		fgets(nom, 9, stdin);
-		printf_s("Pour quelle prenom ? \n");
+		printf_s("Quelle prenom ? \n");
 		fgets(prenom, 9, stdin);
 		for (i = 0; i < 100; i++)
 		{
@@ -58,7 +61,7 @@ int Saisir(noteseninfo* fiche, int* index)
 				printf_s("Entree les valeur \n");
 				for (int j = fiche[i].nbnotes; j < total; j++)
 				{
-					scanf_s("%d", &fiche->note[i]);
+					scanf_s("%f", &fiche->note[i]);
 				}
 				fiche->nbnotes = total;
 				return 0;
@@ -69,10 +72,10 @@ int Saisir(noteseninfo* fiche, int* index)
 		}
 		else
 		{
-			*index++;
+			*index++;//pour verouiller le nouvelle emplacement
 			j = *index;
-			strcpy(fiche[j].nom, nom);//pour copier les deux tableau
-			strcpy(fiche[j].prenom,prenom );//pour copier les deux tableau
+			strcpy_s(fiche[j].nom, nom);//pour copier les deux tableau
+			strcpy_s(fiche[j].prenom,prenom );//pour copier les deux tableau
 			printf_s("Combient de note a saisire ? \n");
 			scanf_s("%d", &nombre);
 			total = nombre;
@@ -81,7 +84,7 @@ int Saisir(noteseninfo* fiche, int* index)
 				printf_s("Entree les valeur \n");
 				for (int j = fiche[i].nbnotes; j < total; j++)
 				{
-					scanf_s("%d", &fiche->note[i]);
+					scanf_s("%f", &fiche->note[i]);
 				}
 				fiche->nbnotes = total;
 				return 0;
@@ -98,18 +101,22 @@ int main(int argc, char** argv)
 {
 	noteseninfo fiche[100];
 	noteseninfo* dirFiche=fiche;
-	int chifre = 0, retour = -1, index = 0;
+	int chiffre = 0, retour = -1, index = 0;
 	int* indexP = &index;
 
 	do {
-
-		switch (chifre)
+		printf_s("Que souaiter vous faire ?\n");
+		printf_s("Saisir des note :1 \n");
+		printf_s("Afficher les note : 2\n");
+		printf_s("Exite : -1 \n");
+		scanf_s("%d", &chiffre);
+		switch (chiffre)
 		{
 		case 1: retour = Saisir(dirFiche,indexP); break;
-		case 2: affiche(dirFiche); break;
+		case 2: affiche(dirFiche,index); break;
 		}
 
-	} while (chifre != -1);
+	} while (chiffre != -1);
 
 	printf_s("FIN\n");
 
