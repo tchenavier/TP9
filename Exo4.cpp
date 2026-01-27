@@ -19,26 +19,39 @@ void affiche(noteseninfo*fiche)
 	}
 }
 
-void Saisir(noteseninfo* fiche)
+int Saisir(noteseninfo* fiche)
 {
-	printf_s("Entree les valeur\n");
-	for (int i = 0; i < 15; i++)
+	int nombre, total=0;
+
+	printf_s("Combient de note a saisire ?\n");
+	scanf_s("%d", &nombre);
+	total = nombre + fiche->nbnotes;
+	if (total<=50)
 	{
-		scanf_s("%d", &X->X[i]);
-		scanf_s("%d", &X->Y[i]);
+		printf_s("Entree les valeur\n");
+		for (int i = 0; i < nombre; i++)
+		{
+			scanf_s("%d", &fiche->note[i]);
+		}
+		return 0;
 	}
+	else
+	{
+		return 1;
+	}
+	
 }
 
 int main(int argc, char** argv)
 {
 	noteseninfo fiche1;
 	noteseninfo* dirFiche;
-	int chifre = 0;
+	int chifre = 0, retour = -1;
 
 	switch (chifre)
 	{
-	case 1: Saisir(dirFiche) break;
-	case 2: affiche(??) break;
+	case 1: retour = Saisir(dirFiche); break;
+	case 2: affiche(dirFiche); break;
 	}
 	
 
