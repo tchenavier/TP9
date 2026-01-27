@@ -24,14 +24,14 @@ void Saisir(coordonnees* X)
 	for (int i = 0; i < 15; i++)
 	{
 		scanf_s("%d", &X->X[i]);
-		scanf_s("%d",& X->Y[i]);
+		scanf_s("%d", &X->Y[i]);
 	}
 }
 
 int main(int argc, char** argv)
 {
 	coordonnees C;
-	coordonnees *C1;
+	coordonnees* C1;
 	C1 = &C;
 
 	Saisir(C1);
