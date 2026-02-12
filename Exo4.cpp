@@ -17,24 +17,40 @@ void viderBuffer(void)
 	while ((c = getchar()) != '\n' && c != EOF) {}
 }
 
-int affiche(noteseninfo* fiche, int index)
+int affiche(noteseninfo* fiche)
 {
-	for (int j = 0; j < index; j++)
+	int index = -1;
+	for (int i = 0; i < 100; i++)
 	{
-		int nombre = fiche[j].nbnotes;
-		printf_s("Note de %s %s : \n", fiche[j].nom, fiche[j].prenom);
-		printf_s("Il y a actuellement %d", fiche[j].nbnotes);
-		for (int i = 0; i < nombre; i++)
+		if ('\0' != *fiche[i].nom && '\0' != *fiche[i].prenom) //verification d'enplacement libre
 		{
-			printf_s("%f ", fiche[j].note[i]);
+			index++;
 		}
 	}
+	if (index == -1)
+	{
+
+	}
+	else
+	{
+		for (int j = 0; j <= index; j++)
+		{
+			int nombre = fiche[j].nbnotes;
+			printf_s("Note de %s %s : \n", fiche[j].nom, fiche[j].prenom);
+			printf_s("Il y a actuellement %d", fiche[j].nbnotes);
+			for (int i = 0; i < nombre; i++)
+			{
+				printf_s("%f ", fiche[j].note[i]);
+			}
+		}
+	}
+
 	return 1;
 }
 
-int Saisir(noteseninfo* fiche, int* index)
+int Saisir(noteseninfo* fiche)
 {
-	int nombre, total = 0, reponse = 0, eleve;
+	int nombre=0, total = 0, reponse = 0, eleve;
 	char nom[15], prenom[15];
 
 	viderBuffer();
@@ -46,7 +62,7 @@ int Saisir(noteseninfo* fiche, int* index)
 
 	for (int i = 0; i < 100; i++)
 	{
-		if ( 0 == strcmp(nom, fiche[i].nom) && strcmp(fiche[i].prenom, prenom) == 0) //compart deux cahine de character
+		if (0 == strcmp(nom, fiche[i].nom) && strcmp(fiche[i].prenom, prenom) == 0) //compart deux cahine de character
 		{
 			reponse = 1;
 			eleve = i;
@@ -83,7 +99,7 @@ int Saisir(noteseninfo* fiche, int* index)
 				printf_s("Entree les valeur \n");
 				for (int j = fiche[eleve].nbnotes; j < total; j++)
 				{
-					scanf_s("%f", &fiche->note[eleve]);
+					scanf_s("%f", &(fiche[eleve].note[j]));
 				}
 				return 0;
 				fiche->nbnotes = total;
@@ -104,7 +120,7 @@ int Saisir(noteseninfo* fiche, int* index)
 				printf_s("Entree les valeur \n");
 				for (int j = fiche[eleve].nbnotes; j < total; j++)
 				{
-					scanf_s("%f", &fiche->note[eleve]);
+					scanf_s("%f", &fiche[eleve].note[j]);
 				}
 				fiche->nbnotes = total;
 				return 0;
@@ -133,8 +149,12 @@ int main(int argc, char** argv)
 		scanf_s("%d", &chiffre);
 		switch (chiffre)
 		{
-		case 1: retour = Saisir(dirFiche, indexP); break;
-		case 2: retour = affiche(dirFiche, index); break;
+		case 1:
+			retour = Saisir(dirFiche);
+			break;
+		case 2:
+			retour = affiche(dirFiche);
+			break;
 		}
 		if (retour == -1)
 		{
